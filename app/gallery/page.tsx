@@ -1,7 +1,10 @@
 export default function gallery() {
   return (
-    <>
-      <p>갤러리페이지</p>
-    </>
+    <div className="flex items-center justify-center h-[600px] bg-gray-100">
+      <div className="text-center">
+        <h1 className="text-4xl font-bold text-gray-800 mb-4">페이지 준비 중입니다</h1>
+        <p className="text-lg text-gray-600">빠른 시일 내에 확인하실 수 있도록 하겠습니다.</p>
+      </div>
+    </div>
   );
 }
