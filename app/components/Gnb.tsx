@@ -14,21 +14,21 @@ export function Gnb() {
   const [selected, setSelected] = useState<number | null>(null);
 
   return (
-    <div className="flex flex-col items-center justify-between  w-full max-w-[1400px] mx-auto pt-10">
+    <div className="flex flex-col items-center w-full max-w-[1400px] mx-auto pt-6">
       <Link href={"/"} onClick={() => setSelected(null)}>
-        <div className="flex flex-col items-center justify-between p-4 mb-10">
-          <h1 className="text-lg">스타코 시공전문 업체</h1>
-          <p className="text-3xl font-bold">스타코 대한도료</p>
+        <div className="flex flex-col items-center p-3 mb-6 text-center">
+          <h1 className="text-sm sm:text-base">스타코 시공전문 업체</h1>
+          <p className="text-xl sm:text-2xl md:text-3xl font-bold">스타코 대한도료</p>
         </div>
       </Link>
 
       {/* 카테고리 */}
-      <ul className="flex items-center justify-center bg-gray-500 w-full text-white h-16 rounded-md">
+      <ul className="flex flex-wrap justify-center gap-2 bg-gray-500 w-full text-white py-3 px-2 rounded-md">
         {page.map((item, index) => (
           <Link href={item.link} key={index}>
             <li
               onClick={() => setSelected(index)}
-              className={`text-sm md:text-lg font-normal px-8 md:px-10 md:py-2 py-4 rounded-full cursor-pointer 
+              className={`text-xs sm:text-sm md:text-lg font-normal px-4 py-2 sm:px-6 sm:py-2 rounded-full cursor-pointer 
               ${selected === index ? "bg-white text-black" : "hover:bg-white hover:text-black"}`}
             >
               {item.name}
