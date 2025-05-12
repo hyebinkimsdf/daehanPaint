@@ -1,6 +1,6 @@
 import React from "react";
 
-export default function location() {
+export default function Location() {
   return (
     <div className="mx-auto w-full max-w-[1400px] mt-10">
       <iframe

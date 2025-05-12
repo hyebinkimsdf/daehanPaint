@@ -1,7 +1,7 @@
 import Image from "next/image";
 import { Ask } from "../components/Ask";
 
-export default function business() {
+export default function Business() {
   return (
     <div className="flex flex-col max-w-[1400px] mx-auto ">
       <div className="max-w-[1400px] flex flex-col md:flex-row justify-center items-starts mx-auto gap-8 mt-12">

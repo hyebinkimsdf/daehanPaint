@@ -1,7 +1,9 @@
 import { connectDB } from "@/util/database";
 import Link from "next/link";
 
-export default async function board() {
+export const dynamic = "force-dynamic"; // 🔥 서버 컴포넌트 캐시 끄기
+
+export default async function Board() {
   let db = (await connectDB).db("board");
   let result = await db.collection("board").find().toArray();
 
@@ -23,10 +25,14 @@ export default async function board() {
           <div className="flex w-full justify-between px-8 h-16 items-center border-b-2 text-base font-medium max-w-[1400px] ">
             <p className="pl-4">{item.postNumber}</p>
             <p>문의드립니다.</p>
-            <p>{item.date}</p>
+            <p>{new Date(item.date).toLocaleDateString()}</p>
           </div>
         </Link>
       ))}
+
+      <Link href="/write" className="flex items-end justify-end w-full mt-10">
+        <button className=" bg-slate-800 text-white px-8 py-4 font-semibold rounded-md">작성하기</button>
+      </Link>
     </div>
   );
 }

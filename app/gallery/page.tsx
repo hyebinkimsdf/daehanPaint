@@ -1,4 +1,4 @@
-export default function gallery() {
+export default function Gallery() {
   return (
     <div className="flex items-center justify-center h-[600px] bg-gray-100">
       <div className="text-center">
