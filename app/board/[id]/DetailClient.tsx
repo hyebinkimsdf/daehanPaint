@@ -22,6 +22,7 @@ export default function DetailClient({ post }: { post: any }) {
 
   // 비밀번호 확인 함수
   const handlePasswordSubmit = () => {
+    console.log("Admin Password:", process.env.NEXT_PUBLIC_ADMIN_PASSWORD); // 콘솔 로그 확인
     if (inputPassword === post.password || inputPassword === process.env.NEXT_PUBLIC_ADMIN_PASSWORD) {
       // 게시글의 비밀번호와 일치하는지 체크
       setIsPasswordCorrect(true); // 비밀번호가 맞으면 콘텐츠 보여줌
