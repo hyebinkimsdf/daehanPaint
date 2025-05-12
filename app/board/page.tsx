@@ -20,7 +20,7 @@ export default async function Board() {
         <p>날짜</p>
       </div>
 
-      {result.map((item, _index) => (
+      {result.map((item) => (
         <Link key={item._id.toString()} href={`/board/${item._id.toString()}`} className="w-full">
           <div className="flex w-full justify-between px-8 h-16 items-center border-b-2 text-base font-medium max-w-[1400px] ">
             <p className="pl-4">{item.postNumber}</p>
