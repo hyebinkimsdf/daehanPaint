@@ -9,7 +9,7 @@ export default async function test(요청: NextApiRequest, 응답: NextApiRespon
     try {
       const client = await connectDB;
       const db = client.db("forum");
-      let result = await db.collection("post").insertOne(요청.body);
+      // let result = await db.collection("post").insertOne(요청.body);
       return 응답.status(200).redirect(302, "/");
     } catch (error) {
       console.log(error);

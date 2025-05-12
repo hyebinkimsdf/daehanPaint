@@ -4,8 +4,8 @@ import Link from "next/link";
 export const dynamic = "force-dynamic"; // 🔥 서버 컴포넌트 캐시 끄기
 
 export default async function Board() {
-  let db = (await connectDB).db("board");
-  let result = await db.collection("board").find().toArray();
+  const db = (await connectDB).db("board");
+  const result = await db.collection("board").find().toArray();
 
   return (
     <div className="flex flex-col mx-auto w-full max-w-[1400px] justify-center items-center">
