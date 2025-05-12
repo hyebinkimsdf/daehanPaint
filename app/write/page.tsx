@@ -4,8 +4,10 @@ import { useRouter } from "next/navigation";
 
 export default function Write() {
   const [title, setTitle] = useState("");
+  const [password, setPassword] = useState("");
   const [content, setContent] = useState("");
   const [postNumber, setPostNumber] = useState(0);
+  const [commonPassword, setCommonPassword] = useState(""); // 공통 비밀번호
   const router = useRouter();
 
   useEffect(() => {
@@ -36,7 +38,7 @@ export default function Write() {
     const res = await fetch("/api/post/new", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ title, content, postNumber }),
+      body: JSON.stringify({ title, content, postNumber, password, commonPassword }),
     });
 
     if (res.ok) {
@@ -54,6 +56,9 @@ export default function Write() {
       </div>
 
       <form onSubmit={handleSubmit} className="w-full">
+        <input name="password" type="password" placeholder="글 비밀번호" className="w-full h-12 border mt-2 px-2" value={password} onChange={(e) => setPassword(e.target.value)} required />
+      
+
         <input name="title" placeholder="제목입력하세요" className="w-full h-16 border" value={title} onChange={(e) => setTitle(e.target.value)} required />
         <textarea name="content" placeholder="문의 내용을 입력해주세요" className="w-full h-96 border mt-2" value={content} onChange={(e) => setContent(e.target.value)} required />
         <input type="hidden" name="postNumber" value={postNumber} />

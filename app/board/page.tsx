@@ -22,16 +22,16 @@ export default async function Board() {
 
       {result.map((item) => (
         <Link key={item._id.toString()} href={`/board/${item._id.toString()}`} className="w-full">
-          <div className="flex w-full justify-between px-8 h-16 items-center border-b-2 text-base font-medium max-w-[1400px] ">
+          <div className="flex w-full justify-between px-8 h-16 items-center border-b-2 text-base font-medium max-w-[1400px]">
             <p className="pl-4">{item.postNumber}</p>
-            <p>문의드립니다.</p>
+            <p>문의드립니다</p> {/* 제목을 item.title로 변경 */}
             <p>{new Date(item.date).toLocaleDateString()}</p>
           </div>
         </Link>
       ))}
 
       <Link href="/write" className="flex items-end justify-end w-full mt-10">
-        <button className=" bg-slate-800 text-white px-8 py-4 font-semibold rounded-md">작성하기</button>
+        <button className="bg-slate-800 text-white px-8 py-4 font-semibold rounded-md">작성하기</button>
       </Link>
     </div>
   );

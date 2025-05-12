@@ -6,7 +6,10 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
     return res.status(405).json({ message: "Method Not Allowed" });
   }
 
-  const { title, content, postNumber } = req.body;
+  const { title, content, postNumber, password } = req.body;
+
+  // 공통 비밀번호 (관리자가 설정한 비밀번호)
+  const commonPassword = "0530";
 
   // 필수 필드 검증
   if (!title || !content) {
@@ -29,7 +32,9 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
       content,
       postNumber: finalPostNumber,
       createdAt: new Date(),
-      date: new Date(), // date 필드 추가
+      date: new Date(),
+      password,
+      commonPassword, // 공통 비밀번호 추가
     });
 
     if (result.acknowledged) {
