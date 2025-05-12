@@ -14,7 +14,7 @@ export function Gnb() {
   const [selected, setSelected] = useState<number | null>(null);
 
   return (
-    <div className="flex flex-col items-center justify-between  w-full max-w-[1400px] mx-auto ">
+    <div className="flex flex-col items-center justify-between  w-full max-w-[1400px] mx-auto pt-10">
       <Link href={"/"} onClick={() => setSelected(null)}>
         <div className="flex flex-col items-center justify-between p-4 mb-10">
           <h1 className="text-lg">스타코 시공전문 업체</h1>

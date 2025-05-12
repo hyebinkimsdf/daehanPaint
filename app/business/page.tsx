@@ -3,7 +3,7 @@ import { Ask } from "../components/Ask";
 
 export default function business() {
   return (
-    <div className="flex flex-col max-w-[1400px] mx-auto">
+    <div className="flex flex-col max-w-[1400px] mx-auto ">
       <div className="max-w-[1400px] flex flex-col md:flex-row justify-center items-starts mx-auto gap-8 mt-12">
         <div className="w-full md:w-[1400px] relative">
           <Image

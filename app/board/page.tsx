@@ -1,12 +1,10 @@
+import { connectDB } from "@/util/database";
 import Link from "next/link";
 
-export default function board() {
-  const data = [
-    { number: "1500", date: "25/03/20" },
-    { number: "1501", date: "25/03/20" },
-    { number: "1502", date: "25/03/20" },
-    { number: "1503", date: "25/03/20" },
-  ];
+export default async function board() {
+  let db = (await connectDB).db("board");
+  let result = await db.collection("board").find().toArray();
+
   return (
     <div className="flex flex-col mx-auto w-full max-w-[1400px] justify-center items-center">
       <div className="text-center mt-20 mb-10">
@@ -20,10 +18,10 @@ export default function board() {
         <p>날짜</p>
       </div>
 
-      {data.map((item, index) => (
-        <Link key={item.number} href={`/board/${item.number}`} className="w-full">
+      {result.map((item, _index) => (
+        <Link key={item._id.toString()} href={`/board/${item._id.toString()}`} className="w-full">
           <div className="flex w-full justify-between px-8 h-16 items-center border-b-2 text-base font-medium max-w-[1400px] ">
-            <p className="pl-4">{item.number}</p>
+            <p className="pl-4">{item.postNumber}</p>
             <p>문의드립니다.</p>
             <p>{item.date}</p>
           </div>
