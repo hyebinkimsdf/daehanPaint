@@ -2,7 +2,13 @@
 
 import { useEffect, useState } from "react";
 
-export default function DetailClient({ post }: { post: any }) {
+interface Post {
+  title: string;
+  content: string;
+  password: string;
+}
+
+export default function DetailClient({ post }: { post: Post }) {
   const [isAdmin, setIsAdmin] = useState(false);
   const [showContent, setShowContent] = useState(false);
   const [inputPassword, setInputPassword] = useState(""); // 비밀번호 입력 상태

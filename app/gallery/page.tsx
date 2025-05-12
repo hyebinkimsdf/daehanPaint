@@ -1,5 +1,3 @@
-import Image from "next/image";
-
 export default function Gallery() {
   return (
     <div className="flex items-center justify-center h-[600px] bg-gray-100">
