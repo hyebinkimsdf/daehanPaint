@@ -1,4 +1,5 @@
 import Image from "next/image";
+import Link from "next/link";
 export default function Gallery() {
   const imgList = [
     {
@@ -45,7 +46,10 @@ export default function Gallery() {
               <Image src={src} alt={alt} fill className="object-cover rounded-lg" />
             </div>
           ))}
-        </div>
+        </div>{" "}
+        <Link href="/gallery/write" className="flex items-end justify-end w-full mt-10">
+          <button className="bg-slate-800 text-white px-8 py-4 font-semibold rounded-md">작성하기</button>
+        </Link>
       </div>
     </div>
   );
