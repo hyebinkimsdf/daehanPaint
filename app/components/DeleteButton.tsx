@@ -1,9 +1,10 @@
 "use client";
 import { useState } from "react";
 
-export default function DeleteButton({ postId, redirectTo }: { postId: string; redirectTo: string }) {
+export default function DeleteButton({ redirectTo }: { redirectTo: string }) {
   const [showModal, setShowModal] = useState(false);
   const [password, setPassword] = useState("");
+  const [postId, setPostId] = useState<string>("");
 
   const handleDelete = async () => {
     if (!password) return alert("비밀번호를 입력해주세요!");
@@ -15,7 +16,7 @@ export default function DeleteButton({ postId, redirectTo }: { postId: string; r
 
     if (res.ok) {
       alert("삭제 완료!");
-      window.location.href = redirectTo; // 여기만 바뀜!
+      window.location.href = redirectTo; // 리디렉션
     } else {
       alert("삭제 실패! 비밀번호가 틀렸을 수 있어요.");
     }
@@ -25,7 +26,13 @@ export default function DeleteButton({ postId, redirectTo }: { postId: string; r
 
   return (
     <>
-      <button onClick={() => setShowModal(true)} className="px-4 py-2 bg-red-600 text-white rounded hover:bg-red-700 transition-colors">
+      <button
+        onClick={() => {
+          setPostId("somePostId"); // 실제 ID로 설정해야 함
+          setShowModal(true);
+        }}
+        className="px-4 py-2 bg-red-600 text-white rounded hover:bg-red-700 transition-colors"
+      >
         삭제하기
       </button>
 

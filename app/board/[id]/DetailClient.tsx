@@ -118,7 +118,9 @@ export default function DetailClient({ post }: { post: Post }) {
               <p className="text-gray-700 leading-relaxed">{post.content}</p>
             </div>
 
-            <div className="w-full flex justify-end mt-4">{/* <DeleteButton postId={post.id} /> */}</div>
+            <div className="w-full flex justify-end mt-4">
+              <DeleteButton redirectTo={`/some-page/${post.id}`} />
+            </div>
           </div>
         )}
       </div>
