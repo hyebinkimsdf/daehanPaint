@@ -1,6 +1,8 @@
+import DeleteButton from "@/app/components/DeleteButton";
 import { connectDB } from "@/util/database";
 import { ObjectId } from "mongodb";
 import Image from "next/image";
+import Link from "next/link";
 
 interface PageParams {
   id: string;
@@ -54,10 +56,11 @@ export default async function DetailGallery({ params }: { params: PageParams }) 
             <p className="text-gray-700 leading-relaxed">{post.content}</p>
           </div>
 
-          <div className="mt-8 flex justify-end">
-            <a href="/gallery" className="px-4 py-2 bg-blue-600 text-white rounded hover:bg-blue-700 transition-colors">
-              목록으로
-            </a>
+          <div className="mt-8 flex justify-end items-center gap-8">
+            <Link href="/gallery">
+              <button className="px-4 py-2 bg-blue-600 text-white rounded hover:bg-blue-700 transition-colors">목록으로</button>
+            </Link>
+            <DeleteButton postId={params.id} />
           </div>
         </div>
       </div>

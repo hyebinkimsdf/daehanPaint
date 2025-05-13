@@ -35,7 +35,7 @@ export default function DetailClient({ post }: { post: Post }) {
   }, []);
 
   const handlePasswordSubmit = () => {
-    if (inputPassword === post.password || inputPassword === process.env.NEXT_PUBLIC_ADMIN_PASSWORD) {
+    if (inputPassword === post.password || inputPassword === process.env.ADMIN_PASSWORD) {
       setShowContent(true); // isPasswordCorrect 상태 제거 후 showContent로만 처리
     } else {
       alert("비밀번호가 일치하지 않습니다.");

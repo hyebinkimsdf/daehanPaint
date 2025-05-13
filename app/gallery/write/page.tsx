@@ -38,7 +38,7 @@ export default function GWrite() {
 
   const handlePasswordSubmit = () => {
     // 환경변수에서 비밀번호 가져오기
-    const adminPassword = process.env.NEXT_PUBLIC_ADMIN_PASSWORD;
+    const adminPassword = process.env.ADMIN_PASSWORD;
 
     if (inputPassword === adminPassword) {
       setShowContent(true);

@@ -9,7 +9,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
   const { title, content, postNumber, password, name, phone } = req.body;
 
   // 공통 비밀번호 (관리자가 설정한 비밀번호)
-  const commonPassword = process.env.NEXT_PUBLIC_ADMIN_PASSWORD;
+  const commonPassword = process.env.ADMIN_PASSWORD;
 
   // 필수 필드 검증
   if (!title || !content) {
