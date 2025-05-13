@@ -1,7 +1,9 @@
 "use client";
+import DeleteButton from "@/app/components/DeleteButton";
 import { useEffect, useState } from "react";
 
 interface Post {
+  id: string;
   title: string;
   name: string;
   phone: string;
@@ -35,7 +37,9 @@ export default function DetailClient({ post }: { post: Post }) {
   }, []);
 
   const handlePasswordSubmit = () => {
+    console.log(process.env.ADMIN_PASSWORD);
     if (inputPassword === post.password || inputPassword === process.env.ADMIN_PASSWORD) {
+      console.log(process.env.ADMIN_PASSWORD);
       setShowContent(true); // isPasswordCorrect 상태 제거 후 showContent로만 처리
     } else {
       alert("비밀번호가 일치하지 않습니다.");
@@ -114,12 +118,7 @@ export default function DetailClient({ post }: { post: Post }) {
               <p className="text-gray-700 leading-relaxed">{post.content}</p>
             </div>
 
-            {isAdmin && (
-              <div className="mt-6 flex justify-end">
-                <button className="bg-blue-600 text-white px-4 py-2 rounded-md hover:bg-blue-700 transition-colors mr-2">수정</button>
-                <button className="bg-red-600 text-white px-4 py-2 rounded-md hover:bg-red-700 transition-colors">삭제</button>
-              </div>
-            )}
+            <div className="w-full flex justify-end mt-4">{/* <DeleteButton postId={post.id} /> */}</div>
           </div>
         )}
       </div>

@@ -1,7 +1,7 @@
 "use client";
 import { useState } from "react";
 
-export default function DeleteButton({ postId }: { postId: string }) {
+export default function DeleteButton({ postId, redirectTo }: { postId: string; redirectTo: string }) {
   const [showModal, setShowModal] = useState(false);
   const [password, setPassword] = useState("");
 
@@ -15,10 +15,11 @@ export default function DeleteButton({ postId }: { postId: string }) {
 
     if (res.ok) {
       alert("삭제 완료!");
-      window.location.href = "/gallery";
+      window.location.href = redirectTo; // 여기만 바뀜!
     } else {
       alert("삭제 실패! 비밀번호가 틀렸을 수 있어요.");
     }
+
     setShowModal(false);
   };
 

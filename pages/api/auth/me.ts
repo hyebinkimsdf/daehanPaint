@@ -1,11 +1,13 @@
-import { NextRequest, NextResponse } from "next/server";
+// pages/api/auth/me.ts
 
-export async function GET(req: NextRequest) {
-  const token = req.cookies.get("admin-token")?.value;
+import { NextApiRequest, NextApiResponse } from "next";
+
+export default function handler(req: NextApiRequest, res: NextApiResponse) {
+  const token = req.cookies["admin-token"];
 
   if (token === "valid-admin") {
-    return NextResponse.json({ isAdmin: true });
+    res.status(200).json({ isAdmin: true });
   } else {
-    return NextResponse.json({ isAdmin: false });
+    res.status(200).json({ isAdmin: false });
   }
 }
