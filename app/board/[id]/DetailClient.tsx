@@ -12,7 +12,6 @@ interface Post {
 }
 
 export default function DetailClient({ post }: { post: Post }) {
-  const [isAdmin, setIsAdmin] = useState(false);
   const [showContent, setShowContent] = useState(false);
   const [inputPassword, setInputPassword] = useState("");
   const [isLoading, setIsLoading] = useState(false);
@@ -24,7 +23,6 @@ export default function DetailClient({ post }: { post: Post }) {
         const res = await fetch("/api/auth/me");
         const data = await res.json();
         if (data.isAdmin) {
-          setIsAdmin(true);
           setShowContent(true);
         }
       } catch (error) {
@@ -39,8 +37,7 @@ export default function DetailClient({ post }: { post: Post }) {
   const handlePasswordSubmit = () => {
     console.log(process.env.ADMIN_PASSWORD);
     if (inputPassword === post.password || inputPassword === process.env.ADMIN_PASSWORD) {
-      console.log(process.env.ADMIN_PASSWORD);
-      setShowContent(true); // isPasswordCorrect 상태 제거 후 showContent로만 처리
+      setShowContent(true); // 비밀번호가 일치하면 내용 표시
     } else {
       alert("비밀번호가 일치하지 않습니다.");
     }
