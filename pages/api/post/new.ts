@@ -6,7 +6,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
     return res.status(405).json({ message: "Method Not Allowed" });
   }
 
-  const { title, content, postNumber, password, name, phone } = req.body;
+  const { id, title, content, postNumber, password, name, phone } = req.body;
 
   // 공통 비밀번호 (관리자가 설정한 비밀번호)
   const commonPassword = process.env.ADMIN_PASSWORD;
@@ -28,6 +28,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
 
     // 새 게시글 추가
     const result = await db.collection("board").insertOne({
+      id,
       title,
       content,
       postNumber: finalPostNumber,
