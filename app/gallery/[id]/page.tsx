@@ -1,5 +1,6 @@
 import { connectDB } from "@/util/database";
 import { ObjectId } from "mongodb";
+import Image from "next/image";
 
 interface PageParams {
   id: string;
@@ -36,6 +37,20 @@ export default async function DetailGallery({ params }: { params: PageParams }) 
           </div>
 
           <div className="bg-gray-50 rounded-lg p-6 whitespace-pre-wrap">
+            <div>
+              {Array.isArray(post.img) ? (
+                post.img.map((item, index) => (
+                  <div key={index}>
+                    <Image src={item} alt={`Gallery Image ${index}`} width={500} height={500} />
+                  </div>
+                ))
+              ) : (
+                <div>
+                  <Image src={post.img} alt="Gallery Image" width={500} height={500} />
+                </div>
+              )}
+            </div>
+
             <p className="text-gray-700 leading-relaxed">{post.content}</p>
           </div>
 
