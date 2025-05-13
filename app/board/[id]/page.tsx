@@ -21,5 +21,5 @@ export default async function BoardDetail({ params }: Props) {
     return <div>❌ 게시물이 없습니다.</div>;
   }
 
-  return <DetailClient post={result as { title: string; content: string; password: string; phone: string; name: string }} />;
+  return <DetailClient post={result as { id: string; title: string; content: string; password: string; phone: string; name: string }} />;
 }
