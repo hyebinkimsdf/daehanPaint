@@ -13,7 +13,6 @@ export default function DetailClient({ post }: { post: Post }) {
   const [isAdmin, setIsAdmin] = useState(false);
   const [showContent, setShowContent] = useState(false);
   const [inputPassword, setInputPassword] = useState("");
-  const [isPasswordCorrect, setIsPasswordCorrect] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
 
   useEffect(() => {
@@ -37,8 +36,7 @@ export default function DetailClient({ post }: { post: Post }) {
 
   const handlePasswordSubmit = () => {
     if (inputPassword === post.password || inputPassword === process.env.NEXT_PUBLIC_ADMIN_PASSWORD) {
-      setIsPasswordCorrect(true);
-      setShowContent(true);
+      setShowContent(true); // isPasswordCorrect 상태 제거 후 showContent로만 처리
     } else {
       alert("비밀번호가 일치하지 않습니다.");
     }
@@ -51,8 +49,8 @@ export default function DetailClient({ post }: { post: Post }) {
   };
 
   return (
-    <div className="bg-gray-50  py-12">
-      <div className="max-w-[1400px]  mx-auto bg-white rounded-lg shadow-md overflow-hidden">
+    <div className="bg-gray-50 py-12">
+      <div className="max-w-[1400px] mx-auto bg-white rounded-lg shadow-md overflow-hidden">
         <div className="bg-blue-600 py-4 px-6">
           <h1 className="text-2xl font-bold text-white text-center">문의 게시판</h1>
         </div>

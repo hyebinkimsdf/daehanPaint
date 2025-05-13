@@ -4,11 +4,6 @@ import FileUpload from "@/app/components/FileUpload";
 import { useRouter } from "next/navigation";
 import { useState, useEffect } from "react";
 
-interface GWriteProps {
-  title: string;
-  content: string;
-}
-
 export default function GWrite() {
   const [title, setTitle] = useState("");
   const [content, setContent] = useState("");
