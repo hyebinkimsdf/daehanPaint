@@ -35,7 +35,7 @@ export default function Gallery() {
     },
   ];
   return (
-    <div className="flex mt-10 justify-center bg-gray-100 py-10">
+    <div className="flex mt-2 md:mt-10  justify-center bg-gray-100 py-10">
       <div className="text-center max-w-[1400px] w-full">
         <h1 className="text-3xl font-bold text-gray-800 mb-4">갤러리</h1>
         <p className="text-lg text-gray-600 mb-8">실제 작업을 확인해보세요!</p>
