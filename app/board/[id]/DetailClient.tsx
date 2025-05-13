@@ -4,6 +4,8 @@ import { useEffect, useState } from "react";
 
 interface Post {
   title: string;
+  name: string;
+  phone: string;
   content: string;
   password: string;
 }
@@ -39,18 +41,20 @@ export default function DetailClient({ post }: { post: Post }) {
   };
 
   return (
-    <div className="p-12 mx-auto w-full max-w-[1440px] flex flex-col justify-center items-center">
-      <h1 className="text-2xl font-bold border-b-2 w-full text-center">게시물 상세 페이지</h1>
+    <div className="p-12 mx-auto w-full max-w-[1440px] flex flex-col justify-center">
+      <h1 className="text-2xl font-bold border-b-2 w-full text-center">문의 게시판</h1>
 
       {/* 관리자일 때 바로 글 보여주기 */}
       {isAdmin && showContent ? (
         <div className="w-full max-w-[1440px] flex flex-col items-start">
           <h2 className="text-3xl mt-4">제목: {post.title}</h2>
+          <p>이름:{post.name}</p>
+          <p>전화번호:{post.phone}</p>
           <p className="mt-2 text-xl">{post.content}</p>
         </div>
       ) : (
         // 비밀번호 입력 UI
-        <div className="mt-4">
+        <div className="mt-4 w-full max-w-[1440px] mx-auto flex justify-center">
           {!isPasswordCorrect ? (
             <>
               <input type="password" placeholder="비밀번호를 입력하세요" className="border p-2" value={inputPassword} onChange={(e) => setInputPassword(e.target.value)} />
@@ -59,8 +63,10 @@ export default function DetailClient({ post }: { post: Post }) {
               </button>
             </>
           ) : (
-            <div className="w-full max-w-[1440px] flex flex-col items-start">
+            <div className="w-full max-w-[1440px] flex flex-col items-start bg-white px-4 py-10 rounded-md">
               <h2 className="text-3xl mt-4">제목: {post.title}</h2>
+              <p className="my-2">이름:{post.name}</p>
+              <p className="my-2">전화번호:{post.phone}</p>
               <p className="mt-2 text-xl">{post.content}</p>
             </div>
           )}
@@ -68,7 +74,7 @@ export default function DetailClient({ post }: { post: Post }) {
       )}
 
       {/* 비회원이 비밀번호를 입력하지 않으면 내용 보지 못함 */}
-      {!isAdmin && !isPasswordCorrect && <p className="mt-4">비밀번호를 입력해야 내용을 볼 수 있습니다.</p>}
+      {!isAdmin && !isPasswordCorrect && <p className="mt-4 w-full max-w-[1440px] mx-auto flex justify-center">비밀번호를 입력해야 내용을 볼 수 있습니다.</p>}
     </div>
   );
 }
