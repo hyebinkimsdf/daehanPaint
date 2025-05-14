@@ -28,12 +28,30 @@ export default function GWrite() {
     setContent(event.target.value);
   };
 
-  const handlePasswordSubmit = () => {
-    // 비밀번호가 올바르면 showContent 상태를 true로 변경
-    if (inputPassword) {
-      setShowContent(true);
-    } else {
+  const handlePasswordSubmit = async () => {
+    if (!inputPassword) {
       alert("비밀번호를 입력하세요.");
+      return;
+    }
+
+    // 비밀번호를 서버로 보내서 확인
+    try {
+      const res = await fetch("/api/gallary/verify-password", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ password: inputPassword }),
+      });
+
+      const data = await res.json();
+
+      if (res.ok && data.success) {
+        setShowContent(true); // 비밀번호가 맞으면 글쓰기 화면으로 넘어감
+      } else {
+        alert("비밀번호가 일치하지 않습니다."); // 비밀번호가 틀리면 경고
+      }
+    } catch (error) {
+      console.error("비밀번호 검증 중 오류 발생:", error);
+      alert("네트워크 오류가 발생했습니다. 다시 시도해 주세요.");
     }
   };
 
