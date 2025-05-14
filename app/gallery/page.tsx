@@ -5,41 +5,6 @@ import Link from "next/link";
 export const dynamic = "force-dynamic"; // 🔥 서버 컴포넌트 캐시 끄기
 
 export default async function Gallery() {
-  // const imgList = [
-  //   {
-  //     src: "/gallery/item01.jpg",
-  //     alt: "포트폴리오01",
-  //   },
-  //   {
-  //     src: "/gallery/item02.jpg",
-  //     alt: "포트폴리오02",
-  //   },
-  //   {
-  //     src: "/gallery/item03.jpg",
-  //     alt: "포트폴리오03",
-  //   },
-  //   {
-  //     src: "/gallery/item04.jpg",
-  //     alt: "포트폴리오04",
-  //   },
-  //   {
-  //     src: "/gallery/item05.jpg",
-  //     alt: "포트폴리오05",
-  //   },
-  //   {
-  //     src: "/gallery/item06.jpg",
-  //     alt: "포트폴리오06",
-  //   },
-  //   {
-  //     src: "/gallery/item07.jpg",
-  //     alt: "포트폴리오07",
-  //   },
-  //   {
-  //     src: "/gallery/item08.jpg",
-  //     alt: "포트폴리오08",
-  //   },
-  // ];
-
   const db = (await connectDB).db("board");
   const result = await db.collection("gallary").find().toArray();
 
