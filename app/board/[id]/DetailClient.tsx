@@ -1,6 +1,6 @@
 "use client";
 import DeleteButton from "@/app/components/DeleteButton";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 
 interface Post {
   _id: string;
