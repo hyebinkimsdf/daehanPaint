@@ -1,8 +1,7 @@
 "use client";
-
+import { useState, useEffect } from "react";
 import FileUpload from "@/app/components/FileUpload";
 import { useRouter } from "next/navigation";
-import { useState, useEffect } from "react";
 
 export default function GWrite() {
   const [title, setTitle] = useState("");
@@ -14,7 +13,6 @@ export default function GWrite() {
   const router = useRouter();
 
   useEffect(() => {
-    // 페이지 로드 시 로딩 상태를 잠시 유지한 후 비밀번호 입력 화면 표시
     const timer = setTimeout(() => {
       setLoading(false);
     }, 500);
@@ -23,11 +21,20 @@ export default function GWrite() {
   }, []);
 
   const handleTitleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    setTitle(event.target.value); // 제목 상태 업데이트
+    setTitle(event.target.value);
   };
 
   const handleContentChange = (event: React.ChangeEvent<HTMLTextAreaElement>) => {
-    setContent(event.target.value); // 내용 상태 업데이트
+    setContent(event.target.value);
+  };
+
+  const handlePasswordSubmit = () => {
+    // 비밀번호가 올바르면 showContent 상태를 true로 변경
+    if (inputPassword) {
+      setShowContent(true);
+    } else {
+      alert("비밀번호를 입력하세요.");
+    }
   };
 
   const handleSubmit = async (e: React.FormEvent) => {
@@ -44,15 +51,14 @@ export default function GWrite() {
     }
 
     try {
-      // 현재 설정된 postNumber와 함께 데이터 전송
-      const res = await fetch("/api/post/gallary/gallary", {
+      const res = await fetch("/api/gallary/gallary", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ inputPassword, title, content }),
+        body: JSON.stringify({ password: inputPassword, title, content }), // password로 변경
       });
 
       if (res.ok) {
-        router.push("/gallery"); // 등록 성공 시 이동
+        router.push("/gallery");
       } else {
         const errorData = await res.json();
         alert(`등록 실패! ${errorData.message || "다시 시도해 주세요."}`);
@@ -92,7 +98,9 @@ export default function GWrite() {
                 value={inputPassword}
                 onChange={(e) => setInputPassword(e.target.value)}
               />
-              <button className="absolute right-2 top-2 bg-blue-600 text-white px-4 py-1 rounded-md hover:bg-blue-700 transition-colors">확인</button>
+              <button type="button" className="absolute right-2 top-2 bg-blue-600 text-white px-4 py-1 rounded-md hover:bg-blue-700 transition-colors" onClick={handlePasswordSubmit}>
+                확인
+              </button>
             </div>
           </div>
         </div>

@@ -8,10 +8,11 @@ export default async function handler(요청: NextApiRequest, 응답: NextApiRes
       return 응답.status(400).json({ success: false, message: "제목을 입력하세요." });
     }
 
+    const { password, title, content } = 요청.body;
+    console.log(요청.body);
+
     // 비밀번호가 없거나 틀린 경우 처리
-    const { password } = 요청.body; // 요청.body에서 password 추출
     if (password !== process.env.ADMIN_PASSWORD) {
-      console.log("비밀번호 불일치"); // 로깅 추가
       return 응답.status(401).json({ success: false, message: "비밀번호가 일치하지 않습니다." });
     }
 
@@ -21,8 +22,8 @@ export default async function handler(요청: NextApiRequest, 응답: NextApiRes
 
       // 게시글 데이터 저장
       await db.collection("gallary").insertOne({
-        title: 요청.body.title,
-        content: 요청.body.content,
+        title,
+        content,
       });
 
       // 성공 응답
