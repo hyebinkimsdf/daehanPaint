@@ -60,7 +60,7 @@ export default async function DetailGallery({ params }: { params: PageParams }) 
             <Link href="/gallery">
               <button className="px-4 py-2 bg-blue-600 text-white rounded hover:bg-blue-700 transition-colors">목록으로</button>
             </Link>
-            <DeleteButton redirectTo={`/some-page/${post.id}`} postId={"/gallery"} />
+            <DeleteButton redirectTo={`/gallery`} postId={post._id.toString()} />
           </div>
         </div>
       </div>
