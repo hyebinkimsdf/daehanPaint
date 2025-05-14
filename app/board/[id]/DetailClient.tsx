@@ -16,30 +16,35 @@ export default function DetailClient({ post }: { post: Post }) {
   const [inputPassword, setInputPassword] = useState("");
   const [isLoading, setIsLoading] = useState(false);
 
-  useEffect(() => {
-    const checkAdmin = async () => {
-      try {
-        setIsLoading(true);
-        const res = await fetch("/api/auth/me");
-        const data = await res.json();
-        if (data.isAdmin) {
-          setShowContent(true);
-        }
-      } catch (error) {
-        console.error("관리자 확인 중 오류 발생:", error);
-      } finally {
-        setIsLoading(false);
-      }
-    };
-    checkAdmin();
-  }, []);
+  const handlePasswordSubmit = async () => {
+    try {
+      setIsLoading(true);
 
-  const handlePasswordSubmit = () => {
-    console.log(process.env.ADMIN_PASSWORD);
-    if (inputPassword === post.password || inputPassword === process.env.ADMIN_PASSWORD) {
-      setShowContent(true); // 비밀번호가 일치하면 내용 표시
-    } else {
-      alert("비밀번호가 일치하지 않습니다.");
+      const res = await fetch("/api/post/check-password", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          id: post.id, // post.id 추가
+          password: inputPassword, // 비밀번호 값 전달
+        }),
+      });
+
+      const result = await res.json();
+
+      console.log("API 응답:", result); // API 응답 확인
+
+      if (result.success) {
+        setShowContent(true);
+        // 필요한 경우 result.post로 내용 갱신도 가능
+      } else {
+        alert(result.message);
+      }
+    } catch (error) {
+      alert("오류가 발생했습니다.");
+    } finally {
+      setIsLoading(false);
     }
   };
 
@@ -78,7 +83,7 @@ export default function DetailClient({ post }: { post: Post }) {
                   className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent outline-none transition-all"
                   value={inputPassword}
                   onChange={(e) => setInputPassword(e.target.value)}
-                  onKeyPress={handleKeyPress}
+                  onKeyDown={handleKeyPress} // 엔터키로 제출 가능하게 처리
                 />
                 <button onClick={handlePasswordSubmit} className="absolute right-2 top-2 bg-blue-600 text-white px-4 py-1 rounded-md hover:bg-blue-700 transition-colors">
                   확인
@@ -116,7 +121,7 @@ export default function DetailClient({ post }: { post: Post }) {
             </div>
 
             <div className="w-full flex justify-end mt-4">
-              <DeleteButton redirectTo={`/some-page/${post.id}`} />
+              <DeleteButton postId={post.id} redirectTo="/board" />
             </div>
           </div>
         )}

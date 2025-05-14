@@ -42,7 +42,6 @@ export default async function Gallery() {
 
   const db = (await connectDB).db("board");
   const result = await db.collection("gallary").find().toArray();
-  console.log(result);
 
   return (
     <div className="flex mt-2 md:mt-10  justify-center bg-gray-100 py-10">

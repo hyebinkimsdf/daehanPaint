@@ -30,23 +30,6 @@ export default function GWrite() {
     setContent(event.target.value); // 내용 상태 업데이트
   };
 
-  const handleKeyPress = (event: React.KeyboardEvent) => {
-    if (event.key === "Enter") {
-      handlePasswordSubmit();
-    }
-  };
-
-  const handlePasswordSubmit = () => {
-    // 환경변수에서 비밀번호 가져오기
-    const adminPassword = process.env.ADMIN_PASSWORD;
-
-    if (inputPassword === adminPassword) {
-      setShowContent(true);
-    } else {
-      alert("비밀번호가 일치하지 않습니다.");
-    }
-  };
-
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
 
@@ -65,7 +48,7 @@ export default function GWrite() {
       const res = await fetch("/api/post/gallary", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ title, content }),
+        body: JSON.stringify({ inputPassword, title, content }),
       });
 
       if (res.ok) {
@@ -108,11 +91,8 @@ export default function GWrite() {
                 className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent outline-none transition-all"
                 value={inputPassword}
                 onChange={(e) => setInputPassword(e.target.value)}
-                onKeyPress={handleKeyPress}
               />
-              <button onClick={handlePasswordSubmit} className="absolute right-2 top-2 bg-blue-600 text-white px-4 py-1 rounded-md hover:bg-blue-700 transition-colors">
-                확인
-              </button>
+              <button className="absolute right-2 top-2 bg-blue-600 text-white px-4 py-1 rounded-md hover:bg-blue-700 transition-colors">확인</button>
             </div>
           </div>
         </div>
