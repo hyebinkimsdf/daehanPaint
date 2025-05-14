@@ -33,8 +33,6 @@ export default function DetailClient({ post }: { post: Post }) {
 
       const result = await res.json();
 
-      console.log("API 응답:", result); // API 응답 확인
-
       if (result.success) {
         setShowContent(true);
         // 필요한 경우 result.post로 내용 갱신도 가능
@@ -42,6 +40,7 @@ export default function DetailClient({ post }: { post: Post }) {
         alert(result.message);
       }
     } catch (error) {
+      console.error(error); // 오류 로그 출력
       alert("오류가 발생했습니다.");
     } finally {
       setIsLoading(false);
