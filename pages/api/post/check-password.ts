@@ -7,13 +7,13 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
     return res.status(405).json({ success: false, message: "허용되지 않은 메서드입니다." });
   }
 
-  const { id, password: inputPassword } = req.body;
+  const { _id, password: inputPassword } = req.body;
 
   try {
     const client = await connectDB;
     const db = client.db("board");
 
-    const post = await db.collection("board").findOne({ _id: new ObjectId(id) });
+    const post = await db.collection("board").findOne({ _id: new ObjectId(_id) });
 
     if (!post) {
       return res.status(404).json({ success: false, message: "게시글을 찾을 수 없습니다." });

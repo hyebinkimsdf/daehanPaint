@@ -45,7 +45,7 @@ export default function GWrite() {
 
     try {
       // 현재 설정된 postNumber와 함께 데이터 전송
-      const res = await fetch("/api/post/gallary", {
+      const res = await fetch("/api/post/gallary/gallary", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ inputPassword, title, content }),

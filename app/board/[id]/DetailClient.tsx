@@ -3,7 +3,7 @@ import DeleteButton from "@/app/components/DeleteButton";
 import { useEffect, useState } from "react";
 
 interface Post {
-  id: string;
+  _id: string;
   title: string;
   name: string;
   phone: string;
@@ -26,7 +26,7 @@ export default function DetailClient({ post }: { post: Post }) {
           "Content-Type": "application/json",
         },
         body: JSON.stringify({
-          id: post.id, // post.id 추가
+          _id: post._id, // post.id 추가
           password: inputPassword, // 비밀번호 값 전달
         }),
       });
@@ -121,7 +121,7 @@ export default function DetailClient({ post }: { post: Post }) {
             </div>
 
             <div className="w-full flex justify-end mt-4">
-              <DeleteButton postId={post.id} redirectTo="/board" />
+              <DeleteButton postId={post._id} redirectTo="/board" />
             </div>
           </div>
         )}
