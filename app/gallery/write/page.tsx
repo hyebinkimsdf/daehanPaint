@@ -9,6 +9,7 @@ export default function GWrite() {
   const [inputPassword, setInputPassword] = useState("");
   const [showContent, setShowContent] = useState(false);
   const [loading, setLoading] = useState(true);
+  const [selectedFiles, setSelectedFiles] = useState<File[]>([]);
 
   const router = useRouter();
 
@@ -69,16 +70,27 @@ export default function GWrite() {
     }
 
     try {
-      const res = await fetch("/api/gallary/gallary", {
+      // 이미지 업로드
+      const formData = new FormData();
+      selectedFiles.forEach((file) => formData.append("img", file));
+
+      const res = await fetch("/api/image/route", {
         method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ password: inputPassword, title, content }), // password로 변경
+        body: formData,
       });
 
-      if (res.ok) {
+      const { data: imageUrls } = await res.json();
+
+      const response = await fetch("/api/gallary/gallary", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ password: inputPassword, title, content, images: Array.isArray(imageUrls) ? imageUrls : [imageUrls] }), // password로 변경
+      });
+
+      if (response.ok) {
         router.push("/gallery");
       } else {
-        const errorData = await res.json();
+        const errorData = await response.json();
         alert(`등록 실패! ${errorData.message || "다시 시도해 주세요."}`);
       }
     } catch (error) {
@@ -124,7 +136,7 @@ export default function GWrite() {
         </div>
       ) : (
         <form className="w-full" onSubmit={handleSubmit}>
-          <FileUpload />
+          <FileUpload onFilesSelected={setSelectedFiles} />
           <input name="title" placeholder="제목을 입력하세요" value={title} onChange={handleTitleChange} className="w-full h-16 border pl-4" required />
           <textarea name="content" placeholder="내용을 입력해주세요" value={content} onChange={handleContentChange} className="w-full h-96 border mt-2 pl-4 pt-4" required />
 

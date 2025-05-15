@@ -9,9 +9,6 @@ export default async function handler(요청: NextApiRequest, 응답: NextApiRes
     }
 
     const { password, title, content } = 요청.body;
-    console.log("서버 비밀번호:", process.env.ADMIN_PASSWORD);
-    console.log("입력된 비밀번호:", password);
-    console.log("받은 요청 데이터:", 요청.body);
 
     // 비밀번호가 없거나 틀린 경우 처리
     if (password !== process.env.ADMIN_PASSWORD) {
