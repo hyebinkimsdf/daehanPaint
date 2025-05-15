@@ -13,7 +13,8 @@ export function MainTelBanner() {
         {/* 텍스트 콘텐츠 */}
         <div className="flex flex-col items-start justify-center gap-2  px-24 py-8 md:px-12 md:py-16 absolute z-10 text-white text-sm  lg:text-base">
           <h3 className="text-2xl">스타코 대한도료</h3>
-          <p>STUCOFLEX | 플레시텍스</p>
+          <p>스타코플렉스</p>
+          <p>STUCOFLEX |플레시텍스</p>
           <p>일반스타코(데코, 노말)파렉스</p>
           <p>스타코 시공·자재 판매</p>
           <a href="tel:01053621597">
