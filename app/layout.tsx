@@ -3,6 +3,7 @@ import localFont from "next/font/local";
 import "./globals.css";
 import { Gnb } from "./components/Gnb";
 import { Footer } from "./components/Footer";
+import { GoogleTagManager } from "./components/GoogleTagManager";
 
 const geistSans = localFont({
   src: "./fonts/GeistVF.woff",
@@ -28,11 +29,11 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className={`${geistSans.variable} ${geistMono.variable} antialiased  bg-slate-600 `}>
+        <GoogleTagManager />
         <div className=" bg-slate-100 px-4 pb-20 md:pb-48 ">
           <Gnb />
           {children}
         </div>
-
         <Footer />
       </body>
     </html>
