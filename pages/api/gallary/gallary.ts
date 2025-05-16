@@ -1,8 +1,6 @@
 import { NextApiRequest, NextApiResponse } from "next";
 import { connectDB } from "@/util/database";
 
-
-
 export default async function handler(req: NextApiRequest, res: NextApiResponse) {
   if (req.method === "POST") {
     if (!req.body.title || req.body.title.trim() === "") {

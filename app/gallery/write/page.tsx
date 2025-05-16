@@ -10,7 +10,6 @@ export default function GWrite() {
   const [showContent, setShowContent] = useState(false);
   const [loading, setLoading] = useState(true);
   const [selectedFiles, setSelectedFiles] = useState<File[]>([]);
-  const [uploading, setUploading] = useState(false);
 
   const router = useRouter();
 
@@ -36,6 +35,7 @@ export default function GWrite() {
       });
 
       const data = await res.json();
+
       if (res.ok && data.success) {
         setShowContent(true);
       } else {
@@ -66,18 +66,19 @@ export default function GWrite() {
       alert("제목을 입력하세요.");
       return;
     }
+
     if (!content.trim()) {
       alert("내용을 입력하세요.");
       return;
     }
 
     try {
-      setUploading(true); // 업로드 시작
       let imageUrls: string[] = [];
 
       if (selectedFiles.length > 0) {
         const uploadPromises = selectedFiles.map(async (file) => {
           const base64String = await convertFileToBase64(file);
+
           const res = await fetch("/api/upload", {
             method: "POST",
             headers: { "Content-Type": "application/json" },
@@ -93,13 +94,14 @@ export default function GWrite() {
             console.error("이미지 업로드 실패:", errorText);
             throw new Error(`이미지 '${file.name}' 업로드에 실패했습니다.`);
           }
+
           const data = await res.json();
           return data.imageUrl;
         });
+
         imageUrls = await Promise.all(uploadPromises);
       }
 
-      console.log("업로드된 이미지 URLs:", imageUrls);
       const response = await fetch("/api/gallary/gallary", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
@@ -110,6 +112,7 @@ export default function GWrite() {
           imageUrls,
         }),
       });
+
       if (response.ok) {
         router.push("/gallery");
       } else {
@@ -120,8 +123,6 @@ export default function GWrite() {
     } catch (error) {
       console.error("게시글 등록 중 오류 발생:", error);
       alert("네트워크 오류가 발생했습니다. 다시 시도해 주세요.");
-    } finally {
-      setUploading(false); // 업로드 종료
     }
   };
 
@@ -144,6 +145,7 @@ export default function GWrite() {
             <h2 className="text-xl font-semibold text-gray-700">보안 게시글</h2>
             <p className="text-gray-500 mt-2">이 게시글을 작성하려면 비밀번호를 입력하세요.</p>
           </div>
+
           <div className="w-full max-w-md">
             <div className="relative">
               <input
@@ -153,11 +155,7 @@ export default function GWrite() {
                 value={inputPassword}
                 onChange={(e) => setInputPassword(e.target.value)}
               />
-              <button
-                type="button"
-                onClick={handlePasswordSubmit}
-                className="absolute right-2 top-2 bg-blue-600 text-white px-4 py-1 rounded-md hover:bg-blue-700 transition-colors"
-              >
+              <button type="button" onClick={handlePasswordSubmit} className="absolute right-2 top-2 bg-blue-600 text-white px-4 py-1 rounded-md hover:bg-blue-700 transition-colors">
                 확인
               </button>
             </div>
@@ -166,33 +164,11 @@ export default function GWrite() {
       ) : (
         <form className="w-full" onSubmit={handleSubmit}>
           <FileUpload onFilesSelected={setSelectedFiles} />
-          <input
-            name="title"
-            placeholder="제목을 입력하세요"
-            value={title}
-            onChange={handleTitleChange}
-            className="w-full h-16 border pl-4"
-            required
-          />
-          <textarea
-            name="content"
-            placeholder="내용을 입력해주세요"
-            value={content}
-            onChange={handleContentChange}
-            className="w-full h-96 border mt-2 pl-4 pt-4"
-            required
-          />
+          <input name="title" placeholder="제목을 입력하세요" value={title} onChange={handleTitleChange} className="w-full h-16 border pl-4" required />
+          <textarea name="content" placeholder="내용을 입력해주세요" value={content} onChange={handleContentChange} className="w-full h-96 border mt-2 pl-4 pt-4" required />
           <div className="flex w-full justify-center">
-            <button
-              type="submit"
-              disabled={uploading}
-              className={`mt-4 border px-10 py-4 rounded-md text-lg transition-colors ${
-                uploading
-                  ? "bg-gray-400 text-white cursor-not-allowed"
-                  : "bg-blue-500 text-white hover:bg-blue-600"
-              }`}
-            >
-              {uploading ? "업로드 중..." : "등록하기"}
+            <button type="submit" className="mt-4 border px-10 py-4 rounded-md text-lg bg-blue-500 text-white hover:bg-blue-600">
+              등록하기
             </button>
           </div>
         </form>
