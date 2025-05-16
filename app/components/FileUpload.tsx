@@ -15,7 +15,7 @@ export default function FileUpload({ onFilesSelected }: Props) {
   return (
     <FilePond
       allowMultiple={true}
-      maxFiles={5}
+      maxFiles={10}
       name="files"
       labelIdle='여기로 파일을 드래그하거나 <span class="filepond--label-action">찾아보기</span>'
       onupdatefiles={(fileItems) => {
