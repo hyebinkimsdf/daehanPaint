@@ -9,6 +9,7 @@ export default function Write() {
   const [password, setPassword] = useState("");
   const [content, setContent] = useState("");
   const [postNumber, setPostNumber] = useState(0);
+  const [loading, setLoading] = useState(false);
   const [commonPassword] = useState(""); // 공통 비밀번호
   const router = useRouter();
 
@@ -35,16 +36,18 @@ export default function Write() {
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+    setLoading(true); // 등록 시작
 
-    // 현재 설정된 postNumber와 함께 데이터 전송
     const res = await fetch("/api/post/new", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ title, content, postNumber, password, commonPassword, name, phone }),
     });
 
+    setLoading(false); // 등록 끝
+
     if (res.ok) {
-      router.push("/board"); // 등록 성공 시 이동
+      router.push("/board");
     } else {
       alert("등록 실패! 다시 시도해 주세요.");
     }
@@ -79,8 +82,8 @@ export default function Write() {
         <textarea name="content" placeholder="문의 내용을 입력해주세요" className="w-full h-96 border mt-2 pl-4 pt-4" value={content} onChange={(e) => setContent(e.target.value)} required />
         <input type="hidden" name="postNumber" value={postNumber} />
         <div className="flex w-full justify-center">
-          <button type="submit" className="mt-4 border px-10 py-4 rounded-md text-lg bg-blue-500 text-white hover:bg-blue-600 ">
-            등록하기
+          <button type="submit" disabled={loading} className={`mt-4 border px-10 py-4 rounded-md text-lg ${loading ? "bg-gray-400 cursor-not-allowed" : "bg-blue-500 hover:bg-blue-600"} text-white`}>
+            {loading ? "등록 중..." : "등록하기"}
           </button>
         </div>
       </form>
