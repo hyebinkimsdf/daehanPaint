@@ -7,7 +7,7 @@ export function Gnb() {
     { name: "인사말", link: "/about" },
     { name: "영업안내", link: "/business" },
     { name: "갤러리", link: "/gallery" },
-    { name: "게시판", link: "/board" },
+    { name: "문의 게시판", link: "/board" },
     { name: "오시는길", link: "/location" },
   ];
 
