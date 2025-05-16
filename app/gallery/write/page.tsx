@@ -14,28 +14,19 @@ export default function GWrite() {
   const router = useRouter();
 
   useEffect(() => {
-    const timer = setTimeout(() => {
-      setLoading(false);
-    }, 500);
-
+    const timer = setTimeout(() => setLoading(false), 500);
     return () => clearTimeout(timer);
   }, []);
 
-  const handleTitleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    setTitle(event.target.value);
-  };
-
-  const handleContentChange = (event: React.ChangeEvent<HTMLTextAreaElement>) => {
-    setContent(event.target.value);
-  };
+  const handleTitleChange = (e: React.ChangeEvent<HTMLInputElement>) => setTitle(e.target.value);
+  const handleContentChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => setContent(e.target.value);
 
   const handlePasswordSubmit = async () => {
-    if (!inputPassword) {
+    if (!inputPassword.trim()) {
       alert("비밀번호를 입력하세요.");
       return;
     }
 
-    // 비밀번호를 서버로 보내서 확인
     try {
       const res = await fetch("/api/gallary/verify-password", {
         method: "POST",
@@ -46,14 +37,26 @@ export default function GWrite() {
       const data = await res.json();
 
       if (res.ok && data.success) {
-        setShowContent(true); // 비밀번호가 맞으면 글쓰기 화면으로 넘어감
+        setShowContent(true);
       } else {
-        alert("비밀번호가 일치하지 않습니다."); // 비밀번호가 틀리면 경고
+        alert("비밀번호가 일치하지 않습니다.");
       }
     } catch (error) {
       console.error("비밀번호 검증 중 오류 발생:", error);
       alert("네트워크 오류가 발생했습니다. 다시 시도해 주세요.");
     }
+  };
+
+  const convertFileToBase64 = (file: File): Promise<string> => {
+    return new Promise((resolve, reject) => {
+      const reader = new FileReader();
+      reader.onloadend = () => {
+        const result = reader.result as string;
+        resolve(result.split(",")[1]);
+      };
+      reader.onerror = reject;
+      reader.readAsDataURL(file);
+    });
   };
 
   const handleSubmit = async (e: React.FormEvent) => {
@@ -70,24 +73,13 @@ export default function GWrite() {
     }
 
     try {
-      // 이미지 파일 업로드 (S3)
       let imageUrls: string[] = [];
 
       if (selectedFiles.length > 0) {
-        // 모든 선택된 파일을 순회하며 업로드
         const uploadPromises = selectedFiles.map(async (file) => {
-          const reader = new FileReader();
+          const base64String = await convertFileToBase64(file);
 
-          const base64String = await new Promise<string>((resolve, reject) => {
-            reader.onloadend = () => {
-              const result = reader.result as string;
-              resolve(result.split(",")[1]);
-            };
-            reader.onerror = reject;
-            reader.readAsDataURL(file);
-          });
-
-          const imageUploadResponse = await fetch("/api/upload", {
+          const res = await fetch("/api/upload", {
             method: "POST",
             headers: { "Content-Type": "application/json" },
             body: JSON.stringify({
@@ -97,23 +89,18 @@ export default function GWrite() {
             }),
           });
 
-          if (!imageUploadResponse.ok) {
-            const errorText = await imageUploadResponse.text();
+          if (!res.ok) {
+            const errorText = await res.text();
             console.error("이미지 업로드 실패:", errorText);
             throw new Error(`이미지 '${file.name}' 업로드에 실패했습니다.`);
           }
 
-          const imageData = await imageUploadResponse.json();
-          return imageData.imageUrl;
+          const data = await res.json();
+          return data.imageUrl;
         });
 
-        // 모든 이미지 업로드 완료 대기
         imageUrls = await Promise.all(uploadPromises);
       }
-
-      // 게시글 정보 업로드
-      console.log("게시글 등록 시작...");
-      console.log("업로드된 이미지 URLs:", imageUrls);
 
       const response = await fetch("/api/gallary/gallary", {
         method: "POST",
@@ -122,12 +109,11 @@ export default function GWrite() {
           password: inputPassword,
           title,
           content,
-          imageUrls: imageUrls, // 업로드된 모든 이미지 URL 포함
+          imageUrls,
         }),
       });
 
       if (response.ok) {
-        console.log("게시글 등록 완료!");
         router.push("/gallery");
       } else {
         const errorData = await response.json();
@@ -142,7 +128,7 @@ export default function GWrite() {
 
   return (
     <div className="flex flex-col mx-auto w-full max-w-[1400px] justify-center items-center">
-      <div className="text-center my-10 ">
+      <div className="text-center my-10">
         <h2 className="text-2xl font-semibold">갤러리 작성하기</h2>
       </div>
 
@@ -153,8 +139,8 @@ export default function GWrite() {
       ) : !showContent ? (
         <div className="p-8 flex flex-col items-center">
           <div className="mb-6 text-center">
-            <svg className="w-16 h-16 text-gray-400 mx-auto mb-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z"></path>
+            <svg className="w-16 h-16 text-gray-400 mx-auto mb-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z" />
             </svg>
             <h2 className="text-xl font-semibold text-gray-700">보안 게시글</h2>
             <p className="text-gray-500 mt-2">이 게시글을 작성하려면 비밀번호를 입력하세요.</p>
@@ -169,7 +155,7 @@ export default function GWrite() {
                 value={inputPassword}
                 onChange={(e) => setInputPassword(e.target.value)}
               />
-              <button type="button" className="absolute right-2 top-2 bg-blue-600 text-white px-4 py-1 rounded-md hover:bg-blue-700 transition-colors" onClick={handlePasswordSubmit}>
+              <button type="button" onClick={handlePasswordSubmit} className="absolute right-2 top-2 bg-blue-600 text-white px-4 py-1 rounded-md hover:bg-blue-700 transition-colors">
                 확인
               </button>
             </div>
@@ -180,7 +166,6 @@ export default function GWrite() {
           <FileUpload onFilesSelected={setSelectedFiles} />
           <input name="title" placeholder="제목을 입력하세요" value={title} onChange={handleTitleChange} className="w-full h-16 border pl-4" required />
           <textarea name="content" placeholder="내용을 입력해주세요" value={content} onChange={handleContentChange} className="w-full h-96 border mt-2 pl-4 pt-4" required />
-
           <div className="flex w-full justify-center">
             <button type="submit" className="mt-4 border px-10 py-4 rounded-md text-lg bg-blue-500 text-white hover:bg-blue-600">
               등록하기
