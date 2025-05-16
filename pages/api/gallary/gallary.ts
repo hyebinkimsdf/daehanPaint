@@ -16,6 +16,7 @@ export default async function handler(요청: NextApiRequest, 응답: NextApiRes
     }
 
     try {
+      
       // 데이터베이스 연결
       const db = (await connectDB).db("board");
 

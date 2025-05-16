@@ -70,27 +70,61 @@ export default function GWrite() {
     }
 
     try {
-      // 이미지 업로드
-      const formData = new FormData();
-      selectedFiles.forEach((file) => formData.append("img", file));
+      // 이미지 파일 업로드 (S3)
+      let imageUrls: string[] = [];
 
-      const res = await fetch("/api/image/route", {
-        method: "POST",
-        body: formData,
-      });
+      if (selectedFiles.length > 0) {
+        const file = selectedFiles[0];
+        const reader = new FileReader();
 
-      const { data: imageUrls } = await res.json();
+        const base64String = await new Promise<string>((resolve, reject) => {
+          reader.onloadend = () => {
+            const result = reader.result as string;
+            resolve(result.split(",")[1]);
+          };
+          reader.onerror = reject;
+          reader.readAsDataURL(file);
+        });
 
+        const imageUploadResponse = await fetch("/api/upload", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({
+            fileName: file.name,
+            fileType: file.type,
+            fileContentBase64: base64String,
+          }),
+        });
+
+        if (!imageUploadResponse.ok) {
+          const errorText = await imageUploadResponse.text();
+          console.error("이미지 업로드 실패:", errorText);
+          throw new Error("이미지 업로드에 실패했습니다.");
+        }
+
+        const imageData = await imageUploadResponse.json();
+        imageUrls = [imageData.imageUrl];
+      }
+
+      // 게시글 정보 업로드
+      console.log("게시글 등록 시작...");
       const response = await fetch("/api/gallary/gallary", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ password: inputPassword, title, content, images: Array.isArray(imageUrls) ? imageUrls : [imageUrls] }), // password로 변경
+        body: JSON.stringify({
+          password: inputPassword,
+          title,
+          content,
+          imageUrls: imageUrls, // 업로드된 이미지 URL 포함
+        }),
       });
 
       if (response.ok) {
+        console.log("게시글 등록 완료!");
         router.push("/gallery");
       } else {
         const errorData = await response.json();
+        console.error("게시글 등록 실패:", errorData);
         alert(`등록 실패! ${errorData.message || "다시 시도해 주세요."}`);
       }
     } catch (error) {
