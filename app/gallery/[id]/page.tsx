@@ -16,6 +16,13 @@ export default async function DetailGallery({ params }: { params: PageParams }) 
     return <div>게시글을 찾을 수 없습니다.</div>;
   }
 
+  let imageList: string[] = [];
+  try {
+    imageList = JSON.parse(post.imageUrls);
+  } catch (e) {
+    console.error("이미지 파싱 오류:", e);
+  }
+
   return (
     <div className="bg-gray-50 py-12">
       <div className="max-w-[1400px] mx-auto bg-white rounded-lg shadow-md overflow-hidden">
@@ -40,16 +47,14 @@ export default async function DetailGallery({ params }: { params: PageParams }) 
 
           <div className="bg-gray-50 rounded-lg p-6 whitespace-pre-wrap">
             <div>
-              {Array.isArray(post.img) ? (
-                post.img.map((item, index) => (
-                  <div key={index}>
+              {imageList.length > 0 ? (
+                imageList.map((item, index) => (
+                  <div key={index} className="mb-2">
                     <Image src={item} alt={`Gallery Image ${index}`} width={500} height={500} />
                   </div>
                 ))
               ) : (
-                <div>
-                  <Image src={post.img} alt="Gallery Image" width={500} height={500} />
-                </div>
+                <p>이미지가 없습니다.</p>
               )}
             </div>
 

@@ -74,40 +74,47 @@ export default function GWrite() {
       let imageUrls: string[] = [];
 
       if (selectedFiles.length > 0) {
-        const file = selectedFiles[0];
-        const reader = new FileReader();
+        // 모든 선택된 파일을 순회하며 업로드
+        const uploadPromises = selectedFiles.map(async (file) => {
+          const reader = new FileReader();
 
-        const base64String = await new Promise<string>((resolve, reject) => {
-          reader.onloadend = () => {
-            const result = reader.result as string;
-            resolve(result.split(",")[1]);
-          };
-          reader.onerror = reject;
-          reader.readAsDataURL(file);
+          const base64String = await new Promise<string>((resolve, reject) => {
+            reader.onloadend = () => {
+              const result = reader.result as string;
+              resolve(result.split(",")[1]);
+            };
+            reader.onerror = reject;
+            reader.readAsDataURL(file);
+          });
+
+          const imageUploadResponse = await fetch("/api/upload", {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({
+              fileName: file.name,
+              fileType: file.type,
+              fileContentBase64: base64String,
+            }),
+          });
+
+          if (!imageUploadResponse.ok) {
+            const errorText = await imageUploadResponse.text();
+            console.error("이미지 업로드 실패:", errorText);
+            throw new Error(`이미지 '${file.name}' 업로드에 실패했습니다.`);
+          }
+
+          const imageData = await imageUploadResponse.json();
+          return imageData.imageUrl;
         });
 
-        const imageUploadResponse = await fetch("/api/upload", {
-          method: "POST",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({
-            fileName: file.name,
-            fileType: file.type,
-            fileContentBase64: base64String,
-          }),
-        });
-
-        if (!imageUploadResponse.ok) {
-          const errorText = await imageUploadResponse.text();
-          console.error("이미지 업로드 실패:", errorText);
-          throw new Error("이미지 업로드에 실패했습니다.");
-        }
-
-        const imageData = await imageUploadResponse.json();
-        imageUrls = [imageData.imageUrl];
+        // 모든 이미지 업로드 완료 대기
+        imageUrls = await Promise.all(uploadPromises);
       }
 
       // 게시글 정보 업로드
       console.log("게시글 등록 시작...");
+      console.log("업로드된 이미지 URLs:", imageUrls);
+
       const response = await fetch("/api/gallary/gallary", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
@@ -115,7 +122,7 @@ export default function GWrite() {
           password: inputPassword,
           title,
           content,
-          imageUrls: imageUrls, // 업로드된 이미지 URL 포함
+          imageUrls: imageUrls, // 업로드된 모든 이미지 URL 포함
         }),
       });
 
