@@ -10,6 +10,7 @@ export default function GWrite() {
   const [showContent, setShowContent] = useState(false);
   const [loading, setLoading] = useState(true);
   const [selectedFiles, setSelectedFiles] = useState<File[]>([]);
+  const [isSubmitting, setIsSubmitting] = useState(false);
 
   const router = useRouter();
 
@@ -72,6 +73,8 @@ export default function GWrite() {
       return;
     }
 
+    setIsSubmitting(true); // 등록 중 상태 ON
+
     try {
       let imageUrls: string[] = [];
 
@@ -123,6 +126,8 @@ export default function GWrite() {
     } catch (error) {
       console.error("게시글 등록 중 오류 발생:", error);
       alert("네트워크 오류가 발생했습니다. 다시 시도해 주세요.");
+    } finally {
+      setIsSubmitting(false); // 등록 완료 후 상태 OFF
     }
   };
 
@@ -167,8 +172,13 @@ export default function GWrite() {
           <input name="title" placeholder="제목을 입력하세요" value={title} onChange={handleTitleChange} className="w-full h-16 border pl-4" required />
           <textarea name="content" placeholder="내용을 입력해주세요" value={content} onChange={handleContentChange} className="w-full h-96 border mt-2 pl-4 pt-4" required />
           <div className="flex w-full justify-center">
-            <button type="submit" className="mt-4 border px-10 py-4 rounded-md text-lg bg-blue-500 text-white hover:bg-blue-600">
-              등록하기
+            <button
+              type="submit"
+              disabled={isSubmitting}
+              className={`mt-4 border px-10 py-4 rounded-md text-lg transition-colors 
+    ${isSubmitting ? "bg-gray-400 text-white cursor-not-allowed" : "bg-blue-500 text-white hover:bg-blue-600"}`}
+            >
+              {isSubmitting ? "등록 중..." : "등록하기"}
             </button>
           </div>
         </form>
