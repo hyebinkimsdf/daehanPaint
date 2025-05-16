@@ -8,7 +8,7 @@ export default function DeleteButton({ postId, redirectTo }: { postId: string; r
   const handleDelete = async () => {
     if (!password) return alert("비밀번호를 입력해주세요!");
 
-    console.log("삭제 시도:", { postId }); // 로깅 추가
+
 
     try {
       const res = await fetch("/api/post/delete", {
@@ -19,10 +19,10 @@ export default function DeleteButton({ postId, redirectTo }: { postId: string; r
         body: JSON.stringify({ id: postId, password }),
       });
 
-      console.log("응답 상태:", res.status); // 로깅 추가
+
 
       const data = await res.json();
-      console.log("응답 데이터:", data); // 로깅 추가
+
 
       if (res.ok) {
         alert("삭제 완료!");

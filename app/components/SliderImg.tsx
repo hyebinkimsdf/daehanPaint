@@ -14,7 +14,6 @@ import { Autoplay, Navigation, Pagination } from "swiper/modules";
 
 export function SliderImg() {
   const imgList = [
-    { img: "/main/slide01.png", alt: "건물1" },
     { img: "/main/slide02.png", alt: "건물2" },
     { img: "/main/slide03.png", alt: "건물3" },
     { img: "/main/slide04.png", alt: "건물4" },
@@ -37,7 +36,9 @@ export function SliderImg() {
       >
         {imgList.map((item, index) => (
           <SwiperSlide key={index}>
-            <Image src={item.img} alt={item.alt} fill />
+            <div style={{ position: "relative", width: "100%", height: "100%" }}>
+              <Image src={item.img} alt={item.alt} fill style={{ objectFit: "cover" }} />
+            </div>
           </SwiperSlide>
         ))}
       </Swiper>

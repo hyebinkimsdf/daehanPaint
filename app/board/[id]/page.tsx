@@ -10,7 +10,6 @@ interface Props {
 
 export default async function BoardDetail({ params }: Props) {
   const db = (await connectDB).db("board");
-  console.log("받은 _id:", params);
 
   if (!ObjectId.isValid(params.id)) {
     // params._id -> params.id

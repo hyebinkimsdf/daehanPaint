@@ -19,7 +19,7 @@ export default function Write() {
         const res = await fetch("/api/post/latest-number");
         if (res.ok) {
           const data = await res.json();
-          console.log("가장 최근 게시물 번호:", data.latestNumber); // 디버깅용 로그
+
           setPostNumber(data.latestNumber + 1);
         } else {
           console.error("최근 게시물 번호를 가져오는데 실패했습니다.");

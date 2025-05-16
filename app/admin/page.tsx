@@ -19,7 +19,6 @@ export default function AdminLogin() {
     const data = await res.json(); // 응답을 JSON으로 파싱
 
     if (res.ok) {
-      console.log("로그인 성공, 이동합니다.");
       router.push("/admin"); // 로그인 성공 시 관리자 페이지로
     } else {
       alert(data.message || "로그인 실패!"); // 서버에서 보낸 오류 메시지 출력
