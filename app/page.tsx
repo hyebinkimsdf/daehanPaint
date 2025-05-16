@@ -1,8 +1,8 @@
 import { Ask } from "./components/Ask";
+import Card from "./components/Card";
 
 import { MainTelBanner } from "./components/MainTelBanner";
 import { SliderImg } from "./components/SliderImg";
-import Image from "next/image";
 
 export default function Home() {
   return (
@@ -11,7 +11,7 @@ export default function Home() {
         <SliderImg />
         <MainTelBanner />
       </div>
-      <Image src="/main/subImg.png" alt="스타코 시공 에폭시전문" width={0} height={0} sizes="100vw" className="w-full h-auto" />
+      <Card />
       <Ask />
     </div>
   );
