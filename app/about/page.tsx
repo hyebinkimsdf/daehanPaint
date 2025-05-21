@@ -8,7 +8,7 @@ export default function About() {
       <div className="flex flex-col md:flex-row justify-center items-start gap-8">
         {/* 이미지 */}
         <div className="w-full md:w-1/2 relative">
-          <Image src="/about/heroImg.jpg" alt="회사건물" layout="responsive" width={1200} height={800} className="object-cover" />
+          <Image src="/about/hero.webp" alt="횡계 리치몬드빌라" layout="responsive" width={1200} height={800} className="object-cover" />
         </div>
 
         {/* 텍스트 */}

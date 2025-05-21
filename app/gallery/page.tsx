@@ -98,7 +98,7 @@ export default async function Gallery({ searchParams }: PageProps) {
                 <Link key={item._id.toString()} href={`/gallery/${item._id.toString()}`}>
                   <div className=" mb-4">
                     <div className="relative w-full aspect-square mb-2">
-                      <Image src={firstImage} alt="" fill className="object-cover rounded-lg" />
+                      <Image src={firstImage} alt="실제작업" fill className="object-cover rounded-lg" />
                     </div>
                     <p className="text-base">{item.title}</p>
                   </div>
