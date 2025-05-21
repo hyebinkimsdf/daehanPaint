@@ -1,8 +1,7 @@
-import { Ask } from "./components/Ask";
-import Card from "./components/Card";
-
-import { MainTelBanner } from "./components/MainTelBanner";
-import { SliderImg } from "./components/SliderImg";
+import { Ask } from "@/components/Ask";
+import Card from "@/components/Card";
+import { MainTelBanner } from "@/components/MainTelBanner";
+import { SliderImg } from "@/components/SliderImg";
 
 export default function Home() {
   return (

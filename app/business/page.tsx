@@ -1,5 +1,5 @@
+import { Ask } from "@/components/Ask";
 import Image from "next/image";
-import { Ask } from "../components/Ask";
 
 export default function Business() {
   return (

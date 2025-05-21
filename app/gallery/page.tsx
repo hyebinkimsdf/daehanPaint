@@ -1,6 +1,6 @@
 // app/gallery/page.tsx
 import { Pagination, PaginationContent, PaginationEllipsis, PaginationItem, PaginationLink, PaginationNext, PaginationPrevious } from "@/components/ui/pagination";
-import { connectDB } from "@/util/database";
+import { connectDB } from "@/lib/database";
 import { Document, WithId } from "mongodb";
 import Image from "next/image";
 import Link from "next/link";

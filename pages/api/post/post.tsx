@@ -1,4 +1,4 @@
-import { connectDB } from "@/util/database";
+import { connectDB } from "@/lib/database";
 import { NextApiRequest, NextApiResponse } from "next";
 
 export default async function test(요청: NextApiRequest, 응답: NextApiResponse) {

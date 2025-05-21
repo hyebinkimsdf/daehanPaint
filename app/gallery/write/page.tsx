@@ -1,7 +1,8 @@
 "use client";
 import { useState, useEffect } from "react";
-import FileUpload from "@/app/components/FileUpload";
+
 import { useRouter } from "next/navigation";
+import FileUpload from "@/components/FileUpload";
 
 export default function GWrite() {
   const [title, setTitle] = useState("");

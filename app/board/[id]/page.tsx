@@ -1,6 +1,6 @@
-import { connectDB } from "@/util/database";
 import { ObjectId } from "mongodb";
 import DetailClient from "./DetailClient";
+import { connectDB } from "@/lib/database";
 
 interface Props {
   params: {

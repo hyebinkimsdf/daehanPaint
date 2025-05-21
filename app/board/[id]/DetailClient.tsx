@@ -1,5 +1,5 @@
 "use client";
-import DeleteButton from "@/app/components/DeleteButton";
+import DeleteButton from "@/components/DeleteButton";
 import { useState } from "react";
 
 interface Post {

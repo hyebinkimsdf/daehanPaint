@@ -1,5 +1,5 @@
-import DeleteButton from "@/app/components/DeleteButton";
-import { connectDB } from "@/util/database";
+import DeleteButton from "@/components/DeleteButton";
+import { connectDB } from "@/lib/database";
 import { ObjectId } from "mongodb";
 import Image from "next/image";
 import Link from "next/link";

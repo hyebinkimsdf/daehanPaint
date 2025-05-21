@@ -1,5 +1,5 @@
 // /pages/api/post/delete.ts
-import { connectDB } from "@/util/database";
+import { connectDB } from "@/lib/database";
 import { ObjectId } from "mongodb";
 import { NextApiRequest, NextApiResponse } from "next";
 

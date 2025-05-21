@@ -1,4 +1,4 @@
-import { Ask } from "../components/Ask";
+import { Ask } from "@/components/Ask";
 import Image from "next/image";
 
 export default function About() {
