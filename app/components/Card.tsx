@@ -57,10 +57,10 @@ export default function Card() {
   ];
 
   return (
-    <div className="max-w-[1440px] mx-auto my-6 px-4">
+    <div className="max-w-[1440px] w-full mx-auto my-6">
       <div className="flex flex-col md:flex-row md:flex-wrap gap-6">
         {Cardprop.map(({ title, contents, icon }, index) => (
-          <div key={index} className="flex-1 bg-white rounded-lg shadow-md text-center p-8 sm:p-12 md:p-16">
+          <div key={index} className="flex-1 bg-white rounded-lg shadow-md text-center p-8 sm:p-12 md:p-16 ">
             {icon}
             <h3 className="font-bold text-lg mb-2">{title}</h3>
             <p className="text-gray-600 text-sm leading-relaxed">{contents}</p>
