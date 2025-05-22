@@ -5,14 +5,14 @@ export default function About() {
   return (
     <main className="max-w-[1440px] mx-auto px-4 sm:px-6 py-8 sm:py-12">
       {/* 이미지 + 텍스트 묶음 */}
-      <section className="flex flex-col md:flex-row justify-center items-start gap-8  md:mb-16">
+      <article className="flex flex-col md:flex-row justify-center items-start gap-8  md:mb-16">
         {/* 이미지 */}
         <div className="w-full md:w-1/2 relative">
           <Image src="/about/hero.webp" alt="횡계 리치몬드빌라" width={1200} height={800} sizes="(max-width: 768px) 100vw, 50vw" priority className="object-cover rounded-lg shadow-md" />
         </div>
 
         {/* 텍스트 */}
-        <article className="flex flex-col w-full md:w-1/2">
+        <div className="flex flex-col w-full md:w-1/2">
           <h1 className="text-3xl text-sky-900 font-semibold mb-4">안녕하십니까?</h1>
           <h2 className="text-xl md:text-2xl text-sky-900 mb-6 max-w-[600px]">저희 스타코 대한도료를 방문해주신 모든 고객님들께 감사드립니다.</h2>
           <p className="md:text-base text-sm mb-10 whitespace-pre-line leading-relaxed text-gray-700">
@@ -22,8 +22,8 @@ export default function About() {
             대한도료가 되도록 노력하겠습니다. <br /> <br />
             앞으로도 많은 관심과 사랑 부탁드립니다. 감사합니다.
           </p>
-        </article>
-      </section>
+        </div>
+      </article>
 
       {/* Ask 컴포넌트 */}
       <section className="w-full">

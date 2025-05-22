@@ -3,11 +3,12 @@ import Image from "next/image";
 
 export default function Business() {
   return (
-    <div className="flex flex-col max-w-[1440px] mx-auto px-4 sm:px-6 md:gap-8">
-      <div className="flex flex-col md:flex-row justify-start items-start gap-8 mt-12 max-w-[1440px] mx-auto">
+    <main className="flex flex-col max-w-[1440px] mx-auto px-4 sm:px-6 md:gap-8">
+      <article className="flex flex-col md:flex-row justify-start items-start gap-8 mt-12 max-w-[1440px] mx-auto">
         <div className="w-full md:w-1/2 relative">
           <Image src="/about/hero.webp" alt="횡계 리치몬드빌라" layout="responsive" width={1200} height={800} className="object-cover rounded-lg shadow-md" />
         </div>
+
         <div className="flex flex-col w-full md:w-1/2">
           <h2 className="text-3xl text-sky-900 font-semibold mb-4">스타코 대한도료 주요업무를 소개합니다</h2>
           <p className="text-xl md:text-2xl text-sky-900 mb-6">STUCOFLEX·플레시텍스·일반스타코(데코, 노말, 그래뉼)파렉스 스타코시공업체·자제판매</p>
@@ -19,10 +20,10 @@ export default function Business() {
             앞으로도 많은 관심과 사랑 부탁드립니다. 감사합니다.
           </p>
         </div>
-      </div>
+      </article>
 
       {/* 이미지리스트 */}
-      <div className="flex flex-col md:flex-row gap-4 max-w-[1440px] w-full  mx-auto mb-4">
+      <section className="flex flex-col md:flex-row gap-4 max-w-[1440px] w-full  mx-auto mb-4">
         {[1, 2, 3].map((num) => (
           <div key={num} className="w-full ">
             <Image
@@ -35,9 +36,12 @@ export default function Business() {
             />
           </div>
         ))}
-      </div>
+      </section>
 
-      <Ask />
-    </div>
+      {/* Ask 컴포넌트 */}
+      <section className="w-full">
+        <Ask />
+      </section>
+    </main>
   );
 }
