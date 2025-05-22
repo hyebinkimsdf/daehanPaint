@@ -79,15 +79,15 @@ export default async function Board({ searchParams }: PageProps) {
 
   return (
     <div className="flex flex-col mx-auto w-full max-w-[1400px] justify-center items-center">
-      <div className="text-center mt-20 mb-10">
+      <div className="text-center mt-10 md:mt-14 mb-6">
         <h2 className="text-2xl font-semibold">문의 게시판</h2>
-        <p className="text-base">문의사항은 게시판에 남겨주시면 신속하게 안내해드리겠습니다</p>
+        <p className="text-sm md:text-base w-64 md:w-full">문의사항은 게시판에 남겨주시면 신속히 안내해드리겠습니다</p>
       </div>
 
-      <div className="flex w-full justify-between px-12 h-16 items-center bg-slate-200 text-lg font-semibold">
-        <p>번호</p>
-        <p>제목</p>
-        <p>날짜</p>
+      <div className="flex w-full justify-between px-12 h-16 items-center bg-slate-200 text-base md:text-lg font-semibold">
+        <div>번호</div>
+        <div>제목</div>
+        <div>날짜</div>
       </div>
 
       {boardItems.length > 0 ? (

@@ -30,7 +30,7 @@ export default function RootLayout({
     <html lang="en">
       <body className={`${geistSans.variable} ${geistMono.variable} antialiased  bg-slate-600 `}>
         <GoogleTagManager />
-        <div className=" bg-slate-100 px-4 pb-20 md:pb-48 ">
+        <div className=" bg-slate-100 px-4 pb-20 ">
           <Gnb />
           {children}
         </div>
