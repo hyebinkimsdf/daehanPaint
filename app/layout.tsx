@@ -35,6 +35,9 @@ export const metadata: Metadata = {
     locale: 'ko_KR',
     type: 'website',
   },
+  other: {
+        'naver-site-verification': '1ec9f213def91f202d47064bcf55bb51341eb5e6',
+  }
 };
 
 export default function RootLayout({
@@ -43,7 +46,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en">
+    <html lang="ko">
       <body className={`${geistSans.variable} ${geistMono.variable} antialiased  bg-slate-600 `}>
         <GoogleTagManager />
         <div className=" bg-slate-100 px-4 pb-20 ">

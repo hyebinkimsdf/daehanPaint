@@ -1,0 +1,9 @@
+User-agent: *
+Disallow: /write
+Disallow: /gallery/write
+
+User-agent: Yeti
+Disallow: /write
+Disallow: /gallery/write
+
+Sitemap: https://www.stuccodaehandoryo.com/sitemap.xml
